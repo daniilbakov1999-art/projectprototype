@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация — Паттерн Prototype</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Prototype<span>Canvas</span></a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Главная</a></li>
+                <li><a href="/editor" class="nav-link">Редактор</a></li>
+                <li><a href="/docs" class="nav-link" style="color: var(--primary);">Документация</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="docs-container">
+        <div class="docs-header">
+            <h1>Документация проекта</h1>
+            <p style="color: var(--text-muted);">Описание архитектуры векторного редактора на базе паттерна Prototype</p>
+        </div>
+
+        <div class="docs-grid">
+            <nav class="docs-nav">
+                <h3>Разделы</h3>
+                <ul>
+                    <li><a href="#about">О паттерне</a></li>
+                    <li><a href="#backend">Бэкенд архитектура</a></li>
+                    <li><a href="#frontend">Фронтенд и Canvas</a></li>
+                </ul>
+            </nav>
+
+            <main class="docs-content">
+                <section id="about" class="docs-section">
+                    <span class="code-badge">Паттерн проектирования</span>
+                    <h2>Что такое Prototype?</h2>
+                    <p><strong>Prototype (Прототип)</strong> — это порождающий паттерн проектирования, который позволяет копировать объекты, не вдаваясь в подробности их реализации. Вместо создания объекта с нуля через конструктор, мы запрашиваем клон у уже существующего объекта-прототипа.</p>
+                </section>
+
+                <section id="backend" class="docs-section">
+                    <span class="code-badge">Backend (Python / Flask)</span>
+                    <h2>Реализация на сервере</h2>
+                    <p>В файле <code style="font-family: monospace; background:#f1f5f9; padding:2px 6px; border-radius:4px;">server.py</code> инициализируется класс <code style="font-family: monospace; color:var(--primary-dark);">ShapeRegistry</code>, который хранит базовые прототипы круга, прямоугольника и треугольника. Метод клонирования принимает входящие параметры размеров и цвета с фронтенда, создавая независимый клон с уникальным UUID.</p>
+                </section>
+
+                <section id="frontend" class="docs-section">
+                    <span class="code-badge">Frontend (JS / HTML5)</span>
+                    <h2>Интерактивное взаимодействие</h2>
+                    <p>Фронтенд отслеживает клики по кнопкам добавления фигур, считывает текущие значения из полей цвета и размера, и отправляет POST-запрос на API бэкенда. При нажатии на кнопку «Дублировать выбранное», на сервер улетает слепок текущего состояния выделенной фигуры для создания точной рантайм-копии.</p>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Курсовая работа.</p>
+    </footer>
+
+</body>
+</html>

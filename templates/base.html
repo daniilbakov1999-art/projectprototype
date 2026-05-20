@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Прототип Геометрии{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fa-solid fa-clone text-neon"></i> Shape<span>Prototype</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link"><i class="fa-solid fa-house"></i> Главная</a></li>
+                <li><a href="/editor" class="nav-link"><i class="fa-solid fa-compass-drafting"></i> Редактор</a></li>
+                <li><a href="/docs" class="nav-link"><i class="fa-solid fa-book"></i> Документация</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Курсовая работа. Разработка веб-приложения на базе паттерна Prototype.</p>
+    </footer>
+
+</body>
+</html>

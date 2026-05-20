@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор — Векторный холст</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">Prototype<span>Canvas</span></a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Главная</a></li>
+                <li><a href="/editor" class="nav-link" style="color: var(--primary);">Редактор</a></li>
+                <li><a href="/docs" class="nav-link">Документация</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="editor-container">
+        
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Инструменты</h2>
+            <p class="sidebar-subtitle">Выберите фигуру-шаблон:</p>
+            
+            <div class="shape-buttons">
+                <button class="btn-shape" onclick="cloneShape('rectangle')">
+                    <i class="fa-solid fa-square text-blue"></i>
+                    <span>Прямоугольник</span>
+                </button>
+                <button class="btn-shape" onclick="cloneShape('circle')">
+                    <i class="fa-solid fa-circle text-pink"></i>
+                    <span>Круг</span>
+                </button>
+                <button class="btn-shape" onclick="cloneShape('triangle')">
+                    <i class="fa-solid fa-play fa-rotate-270 text-purple"></i>
+                    <span>Треугольник</span>
+                </button>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="properties-panel">
+                <h3 class="panel-subtitle">Свойства фигуры</h3>
+                
+                <div class="prop-group">
+                    <label for="shape-color">Цвет заливки</label>
+                    <input type="color" id="shape-color" value="#00a896" onchange="if(typeof updatePreview === 'function') updatePreview()">
+                </div>
+
+                <div class="prop-group">
+                    <label for="shape-size">Габаритный размер (px)</label>
+                    <input type="range" id="shape-size" min="30" max="200" value="100" oninput="if(typeof updatePreview === 'function') updatePreview()">
+                </div>
+
+                <button class="btn btn-primary" id="btn-duplicate" onclick="duplicateSelected()" disabled 
+                        style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 12px 24px; background-color: #00a896; color: #ffffff; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">
+                    <i class="fa-solid fa-clone"></i> Дублировать выбранное
+                </button>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="info-box">
+                <h4><i class="fa-solid fa-circle-info"></i> Паттерн Prototype:</h4>
+                <p>Выделите любую фигуру на холсте кликом мыши и нажмите кнопку «Дублировать». Бэкенд создаст её независимую точную копию.</p>
+            </div>
+        </aside>
+
+        <section class="canvas-area">
+            <div class="canvas-header">
+                <span class="canvas-status"><i class="fa-solid fa-desktop"></i> Векторное рабочее пространство</span>
+                <button class="btn btn-secondary btn-sm" onclick="clearCanvas()"><i class="fa-solid fa-trash-can"></i> Очистить</button>
+            </div>
+            <canvas id="paintCanvas" width="800" height="550"></canvas>
+        </section>
+        
+    </div>
+
+    <script src="/static/js/canvas.js"></script>
+</body>
+</html>
