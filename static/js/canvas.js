@@ -11,6 +11,7 @@ let isShiftPressed = false;
 window.addEventListener('keydown', e => { if (e.key === 'Shift') isShiftPressed = true; });
 window.addEventListener('keyup', e => { if (e.key === 'Shift') isShiftPressed = false; });
 
+// Функция создания абсолютно новой фигуры по кнопке (берет чистый шаблон из реестра)
 function cloneShape(shapeType) {
     const colorInput = document.getElementById('shape-color');
     const color = colorInput ? colorInput.value : "#00a896";
@@ -39,7 +40,6 @@ function cloneShape(shapeType) {
     .then(res => res.json())
     .then(newClones => {
         shapesOnCanvas.push(...newClones);
-        // Выделяем созданный объект
         selectedShapes = [newClones[0]];
         updateButtonsState();
         render();
@@ -49,16 +49,42 @@ function cloneShape(shapeType) {
 function duplicateSelected() {
     if (selectedShapes.length === 0) return;
 
+    const colorInput = document.getElementById('shape-color');
+    const currentColor = colorInput ? colorInput.value : null;
+
+    const sizeInput = document.getElementById('shape-size');
+    const currentSize = sizeInput ? parseInt(sizeInput.value, 10) : null;
+
+    const shapesDataToSend = selectedShapes.map(shape => {
+        const data = {
+            id: shape.id,
+            type: shape.type,
+            x: shape.x,
+            y: shape.y,
+            color: currentColor || shape.color 
+        };
+
+        if (shape.type === 'rectangle') {
+            data.width = currentSize || shape.width;
+            data.height = currentSize ? Math.floor(currentSize * 0.65) : shape.height;
+        } else if (shape.type === 'circle') {
+            data.radius = currentSize ? Math.floor(currentSize / 2) : shape.radius;
+        } else if (shape.type === 'triangle') {
+            data.base = currentSize || shape.base;
+            data.height = currentSize ? Math.floor(currentSize * 0.85) : shape.height;
+        }
+        return data;
+    });
+
     fetch('/api/clone-group', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ shapes: selectedShapes })
+        body: JSON.stringify({ shapes: shapesDataToSend })
     })
     .then(res => res.json())
     .then(newClones => {
         shapesOnCanvas.push(...newClones);
-        // Переключаем выделение на новые созданные клоны
-        selectedShapes = [...newClones];
+        selectedShapes = [...newClones]; 
         render();
     })
     .catch(err => console.error('Ошибка группового клонирования:', err));
